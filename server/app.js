@@ -1,7 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
+const Post = require('./models/post');
+mongoose.connect('mongodb+srv://calebrohdy:bXUHweCAmY4jGU5H@cluster0-nkyap.mongodb.net/test?retryWrites=true')
+    .then(() => {
+        console.log('Connected to Database')
+    })
+    .catch(() => {
+        console.log('Connection Failed')
+    })
 
 app.use(bodyParser.json());
 // handles CORS: Cross Origin Resource Sharing ** communication between 2 different servers i.e. port 3000 and 4000
@@ -14,22 +23,37 @@ app.use((req, res, next) => {
 })
 
 app.post('/api/posts', (req, res, next) => {
-    const post = req.body
-    console.log(post);
-    res.status(201).json({
-        message: 'Post added'
+    const post = new Post({
+        title: req.body.title,
+        content: req.body.content
     });
+    post.save().then(result => {
+        res.status(201).json({
+            message: 'Post added',
+            postId: createdPost._id
+        });
+    })
 })
 
-app.use('/api/posts', (req, res, next) => {
-    const posts = [
-        { id: '2342dsf1', title: 'First server-side post', content: 'this is coming from our node middleware'},
-        { id: '2342dsf2', title: 'Second server-side post', content: 'this is coming from our node middleware'}        
-    ]
-    res.status(200).json({
-        message: 'Posts fetched successfully',
-        posts: posts
-    });
+app.get('/api/posts', (req, res, next) => {
+    Post.find()
+        .then(documents => {
+            res.status(200).json({
+                message: 'Posts fetched successfully',
+                posts: documents
+            });
+        })
+        .catch(error => {
+            console.log(error)
+        })
+});
+
+app.delete('/api/posts/:id', (req, res, next) => {
+    Post.deleteOne({_id: req.params.id})
+        .then(result => {
+            console.log(result);
+        })
+    res.status(200).json({message: "Post deleted"})
 });
 
 module.exports = app;
