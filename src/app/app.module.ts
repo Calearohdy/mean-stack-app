@@ -6,9 +6,12 @@ import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatExpansionModule} from '@angular/material';
+import { MatInputModule, MatCardModule, MatButtonModule,
+    MatToolbarModule, MatExpansionModule, MatProgressSpinnerModule} from '@angular/material';
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './app-route.routing';
 
 @NgModule({
    declarations: [
@@ -26,7 +29,9 @@ import { PostListComponent } from './posts/post-list/post-list.component';
       MatButtonModule,
       MatToolbarModule,
       MatExpansionModule,
-      HttpClientModule
+      MatProgressSpinnerModule,
+      HttpClientModule,
+      RouterModule.forRoot(appRoutes)
    ],
    providers: [],
    bootstrap: [
