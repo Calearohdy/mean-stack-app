@@ -16,6 +16,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private userIsAuth = false;
   private posts: Post[] = [];
   private postsSub: Subscription; // unmount handler
+  userId: string;
   isLoading = false;
   totalPosts = 0;
   postsPerPage = 3;
@@ -30,6 +31,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       this.userIsAuth = isAuthenticated;
     });
     this.userIsAuth = this.authService.getIsAuth();
+    this.userId = this.authService.getUserId();
     this.isLoading = true;
     this.postsService.getPosts(this.postsPerPage, this.currentPage);
     this.postsService.getPostUpdateListener() // did update handler subscribing to changes

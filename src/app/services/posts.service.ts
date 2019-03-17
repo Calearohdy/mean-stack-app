@@ -25,7 +25,8 @@ export class PostsService {
             id: post._id,
             title: post.title,
             content: post.content,
-            imagePath: post.imagePath
+            imagePath: post.imagePath,
+            creator: post.creator
           };
         }), maxPosts: postData.maxPosts};
       })) // allows you to massage or transform the data coming in before the dom subscribes to it
@@ -43,7 +44,13 @@ export class PostsService {
   }
 
   getPost(id: string) {
-    return this.httpClient.get<{_id: string, title: string, content: string, imagePath: string}>('http://localhost:3000/api/posts/' + id);
+    return this.httpClient.get<{
+          _id: string,
+          title: string,
+          content: string,
+          imagePath: string,
+          creator: string;
+        }>('http://localhost:3000/api/posts/' + id);
   }
 
   addPost(title: string, content: string, image: File) {
@@ -66,7 +73,7 @@ export class PostsService {
       postData.append('content', content);
       postData.append('image', image, title);
     } else {
-      postData = {id: id, title: title, content: content, imagePath: image};
+      postData = {id: id, title: title, content: content, imagePath: image, creator: null};
     }
     this.httpClient.put('http://localhost:3000/api/posts/' + id, postData)
       .subscribe(res => {
