@@ -35,7 +35,7 @@ export class AuthService {
     const auth: Auth = {email: email, password: password};
     this.httpService.post('http://localhost:3000/api/auth/register', auth)
       .subscribe(response => {
-        console.log(response); // TODO: add alert library
+        this.router.navigate(['/']); // TODO: add alert library
       });
   }
 
