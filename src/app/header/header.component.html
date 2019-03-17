@@ -8,8 +8,17 @@
 
     </span>
     <ul>
-        <li>
+        <li *ngIf="userIsAuth">
             <a mat-button routerLink="/create" routerLinkActive="mat-accent" >New Post</a>
+        </li>
+        <li *ngIf="!userIsAuth">
+            <a mat-button routerLink="/login" routerLinkActive="mat-accent" >Login</a>
+        </li>
+        <li *ngIf="!userIsAuth">
+            <a mat-button routerLink="/register" routerLinkActive="mat-accent" >Register</a>
+        </li>
+        <li *ngIf="userIsAuth">
+            <button mat-button (click)="onLogout()" >Logout</button>
         </li>
     </ul>
 </mat-toolbar>
