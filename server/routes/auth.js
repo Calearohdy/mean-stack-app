@@ -48,7 +48,8 @@ router.post("/login", (req, res, next) => {
                  'secret_that_is_too_short', {expiresIn: '1h'}
             ); //JWT element signature
             res.status(200).json({
-                token: token
+                token: token,
+                expiresIn: 3600
             })
         })
         .catch(err => {
