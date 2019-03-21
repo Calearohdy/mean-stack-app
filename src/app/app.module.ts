@@ -7,7 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule, MatCardModule, MatButtonModule,
-    MatToolbarModule, MatExpansionModule, MatProgressSpinnerModule, MatPaginatorModule} from '@angular/material';
+    MatToolbarModule, MatExpansionModule, MatProgressSpinnerModule,
+    MatPaginatorModule, MatDialogModule} from '@angular/material';
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { RouterModule } from '@angular/router';
@@ -16,6 +17,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AuthInterceptor } from './services/auth-interceptor';
 import { AuthGuard } from './guards/auth.guard';
+import { ErrorInterceptor } from './services/error-interceptor';
+import { ErrorModalComponent } from './modals/error-modal/error-modal.component';
 
 @NgModule({
    declarations: [
@@ -24,7 +27,8 @@ import { AuthGuard } from './guards/auth.guard';
       HeaderComponent,
       PostListComponent,
       LoginComponent,
-      RegisterComponent
+      RegisterComponent,
+      ErrorModalComponent
    ],
    imports: [
       BrowserModule,
@@ -38,12 +42,17 @@ import { AuthGuard } from './guards/auth.guard';
       MatExpansionModule,
       MatProgressSpinnerModule,
       MatPaginatorModule,
+      MatDialogModule,
       HttpClientModule,
       RouterModule.forRoot(appRoutes)
    ],
-   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, AuthGuard],
+   providers: [
+       {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+       {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    AuthGuard],
    bootstrap: [
       AppComponent
-   ]
+   ],
+   entryComponents: [ErrorModalComponent] // root modals
 })
 export class AppModule { }

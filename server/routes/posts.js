@@ -54,7 +54,9 @@ router.get('', (req, res, next) => {
             });
         })
         .catch(error => {
-            console.log(error)
+            res.status(500).json({
+                message: "Unable to retreive the posts"
+            })
         })
 });
 
@@ -76,6 +78,11 @@ router.post('', authGuard, multer({storage: storage}).single('image'), (req, res
                 imagePath: createdPost.imagePath
             }
         });
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "Unable to create the post. Please try again"
+        })
     })
 })
 
@@ -100,7 +107,9 @@ router.put("/:id", authGuard, multer({storage: storage}).single('image'), (req, 
             } else {
                 res.status(401).json({message: "Not Authorized"})
             }
-        })
+        }).catch(error => res.status(500).json({
+            message: "Unable to update the post. Please try again"
+        }));
 })
 
 router.get("/:id", (req, res, next) => {
@@ -110,7 +119,9 @@ router.get("/:id", (req, res, next) => {
         } else {
             res.status(404).json({message: 'Post noy found'})
         }
-    })
+    }).catch(error => res.status(500).json({
+        message: "Unable to retrieve any posts"
+    }));
 })
 
 router.delete("/:id", authGuard, (req, res, next) => {
@@ -121,7 +132,9 @@ router.delete("/:id", authGuard, (req, res, next) => {
         } else {
             res.status(401).json({message: "Not Authorized"})
         }
-    })
+    }).catch(error => res.status(500).json({
+        message: "Unable to delete the post"
+    }));
 });
 
 module.exports = router;
