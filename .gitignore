@@ -25,6 +25,7 @@
 !.vscode/extensions.json
 
 # misc
+nodemon.json
 /.sass-cache
 /connect.lock
 /coverage

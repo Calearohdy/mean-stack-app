@@ -2,48 +2,33 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatInputModule, MatCardModule, MatButtonModule,
-    MatToolbarModule, MatExpansionModule, MatProgressSpinnerModule,
-    MatPaginatorModule, MatDialogModule} from '@angular/material';
+import { FormsModule } from '@angular/forms';
+
 import { HeaderComponent } from './header/header.component';
-import { PostListComponent } from './posts/post-list/post-list.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app-route.routing';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
 import { AuthInterceptor } from './services/auth-interceptor';
 import { AuthGuard } from './guards/auth.guard';
 import { ErrorInterceptor } from './services/error-interceptor';
 import { ErrorModalComponent } from './modals/error-modal/error-modal.component';
+import { AngularMaterialModule } from './angular-material.module';
+import { PostModule } from './posts/posts.module';
 
 @NgModule({
    declarations: [
       AppComponent,
-      PostCreateComponent,
       HeaderComponent,
-      PostListComponent,
-      LoginComponent,
-      RegisterComponent,
       ErrorModalComponent
    ],
    imports: [
+      PostModule,
       BrowserModule,
       BrowserAnimationsModule,
-      ReactiveFormsModule,
       FormsModule,
-      MatInputModule,
-      MatCardModule,
-      MatButtonModule,
-      MatToolbarModule,
-      MatExpansionModule,
-      MatProgressSpinnerModule,
-      MatPaginatorModule,
-      MatDialogModule,
       HttpClientModule,
+      AngularMaterialModule,
       RouterModule.forRoot(appRoutes)
    ],
    providers: [
