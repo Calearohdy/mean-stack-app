@@ -20,7 +20,7 @@ router.post('/register', (req, res, next) => {
                 })
                 .catch(err => {
                     res.status(500).json({
-                        error: err
+                        message: "Unable to register. Please try a different Email"
                     })
                 })
         });
@@ -55,8 +55,7 @@ router.post("/login", (req, res, next) => {
         })
         .catch(err => {
             return res.status(401).json({
-                error: err,
-                message: "Auth failed"
+                    message: "Incorrect Email or Password. Please try again"
             });
         })
 })

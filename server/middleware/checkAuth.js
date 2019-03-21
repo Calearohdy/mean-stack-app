@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     } catch (error) {
         res.status(401).json({
             error: error,
-            message: 'Auth failed'
+            message: "You must login first!"
         })
     }
     
