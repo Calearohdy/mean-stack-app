@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Auth } from '../models/Auth';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
+const BACKEND_URL = environment.apiUrl + '/auth';
 @Injectable({
   providedIn: 'root'
 })
@@ -33,7 +35,7 @@ export class AuthService {
 
   createUser(email: string, password: string) {
     const auth: Auth = {email: email, password: password};
-    return this.httpService.post('http://localhost:3000/api/auth/register', auth)
+    return this.httpService.post(BACKEND_URL + '/register', auth)
       .subscribe(response => {
         this.router.navigate(['/']); // TODO: add alert library
       }, error => {
@@ -43,7 +45,7 @@ export class AuthService {
 
   userLogin(email: string, password: string) {
     const auth: Auth = {email: email, password: password};
-    this.httpService.post<{token: string, expiresIn: number, userId: string}>('http://localhost:3000/api/auth/login', auth)
+    this.httpService.post<{token: string, expiresIn: number, userId: string}>(BACKEND_URL + '/login', auth)
       .subscribe(response => { // storing token in the auth
         const token = response.token;
         this.token = token;
